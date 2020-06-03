@@ -1,0 +1,124 @@
+MariaDB [(none)]> create database biblioteca
+Query OK, 0 rows affected (0.22 sec)
+
+MariaDB [(none)]> use biblioteca
+Database changed
+MariaDB [biblioteca]> CREATE TABLE bilbiotecario (
+    -> codBibliotecario int PRIMARY KEY auto_increment,
+    -> telefone varchar(255),
+    -> nome varchar(255),
+    -> rg varchar(15) unique,
+    -> cpf varchar(255) unique,
+    -> dataNascimento date,
+    -> email varchar(255) unique,
+    -> logradouro varchar(255),
+    -> num varchar(255),
+    -> complemento varchar(255),
+    -> bairro varchar(255),
+    -> cidade varchar(255),
+    -> uf char(2),
+    -> cep varchar(15) unique
+    -> );
+Query OK, 0 rows affected (0.99 sec)
+
+MariaDB [biblioteca]>
+MariaDB [biblioteca]> CREATE TABLE aluno (
+    -> ra int PRIMARY KEY auto_increment,
+    -> dataNascimento date,
+    -> telFixo varchar(255),
+    -> nome varchar(255),
+    -> email varchar(255) unique,
+    -> turma varchar(255),
+    -> telCel varchar(255)
+    -> );
+Query OK, 0 rows affected (0.23 sec)
+
+MariaDB [biblioteca]>
+MariaDB [biblioteca]> CREATE TABLE livro (
+    -> codLivro int PRIMARY KEY auto_increment,
+    -> editora varchar(255),
+    -> titulo varchar(255),
+    -> autor varchar(255),
+    -> genero varchar(255)
+    -> );
+Query OK, 0 rows affected (0.21 sec)
+
+MariaDB [biblioteca]>
+MariaDB [biblioteca]> CREATE TABLE imprestimo_devolucao (
+    -> codEmprestimo int PRIMARY KEY auto_increment,
+    -> data_devolucao date,
+    -> ra int ,
+    -> data_emprestimo date,
+    -> codBibliotecario int,
+    -> codLivro int,
+    -> FOREIGN KEY(codBibliotecario) REFERENCES bilbiotecario (codBibliotecario)
+,
+    -> FOREIGN KEY(ra) REFERENCES aluno (ra),
+    -> FOREIGN KEY(codLivro) REFERENCES livro (codLivro)
+    -> );
+Query OK, 0 rows affected (0.35 sec)
+
+MariaDB [biblioteca]> insert into livro (titulo, autor, editora, genero) values
+    -> ('A Máquina do Tempo','H. G. Wells','Alfaguara','Ficção/Aventura'),
+    -> ('Exílio Nas Terras Distantes','Nancy Osa','Nemo','Aventura'),
+    -> ('Ponto de Origem','Nancy Osa','Nemo','Aventura'),
+    -> ('Caos Na Galáxia','Dan Abnett','Novo Século','Ficção/Ação'),
+    -> ('A Maldição do Tigre','Colleen Houck','Arqueiro','Românce/Aventura'),
+    -> ('Hades','Alexandra Dornetto','Agir','Romance/Fantasia'),
+    -> ('O Pequeno Príncipe','Antoine de Saint-Exupéry','Agir','Literatura Infan
+to-juvenil/Novela'),
+    -> ('13º Realidade','James Dashner','Novo Século','Aventura'),
+    -> ('A Menina que Roubava Livros','Marcus Zusak','Intrinsca','Romance/Ficção
+'),
+    -> ('O Dia do Coringa','Jostein Gaarder','Geral','Fantasia/aventura');
+Query OK, 10 rows affected (0.12 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+MariaDB [biblioteca]> insert into aluno (nome, email, telFixo, turma, dataNascim
+ento) values
+    -> ('Gustavo Henrique','henriqueg@gmail.com','11911111111','9A','2005-30-08'
+),
+    -> ('Victor Cesar','victor@gmail.com','11922222222','2A','2003-10-29'),
+    -> ('Lucas Alves','lucasa@gmail.com','11933333333','1C','2004-12-10'),
+    -> ('Luciana Pereira','lupereira@gmail.com','11944444444','1B','2004-08-14')
+,
+    -> ('Augusto Ribeiro','augusto@gmail.com','11955555555','1A','2004-04-05'),
+    -> ('Letícia Campos','leticia@gmail.com','11966666666','1B','2004-11-22'),
+    -> ('Evelyne Alves','evealves@gmail.com','11977777777','1C','2004-11-05'),
+    -> ('Daniel Lima','danilima@gmail.com','11988888888','1A','2004-01-21'),
+    -> ('Paulo Gustavo','opaulo@gmail.com','11999999999','2I','2003-07-02'),
+    -> ('Amanda Ferreira','ferreiraa@gmail.com','11900000000','1D','2004-08-07')
+;
+Query OK, 10 rows affected, 1 warning (0.11 sec)
+Records: 10  Duplicates: 0  Warnings: 1
+
+MariaDB [biblioteca]> insert into bilbiotecario (nome, email, cpf, telefone, cid
+ade, uf, dataNascimento) values
+    -> ('Marília Souza','marilia@gmail.com','111.111.111-22','11932223222','Mauá
+','SP','1985-12-08'),
+    -> ('José Carlos','jose@gmail.com','222.222.222-33','11912345678','Mauá','SP
+','1960-03-31'),
+    -> ('Maria de Lourdes','lourdes@gmail.com','3333.333.333-44','11987654321','
+Mauá','SP','1968-06-01');
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [biblioteca]> insert into imprestimo_devolucao (codBibliotecario, codLiv
+ro, data_devolucao, data_emprestimo, ra) values
+    -> (1, 1, '2020-05-30','2020-05-23',1),
+    -> (1,2,'2020-06-01','2020-05-25',2),
+    -> (1,3,'2020-06-03','2020-05-27',3),
+    -> (2,4,'2020-05-29','2020-05-24',4),
+    -> (2,5,'2020-06-5','2020-05-29',5),
+    -> (2,6,'2020-06-06','2020-05-30',6),
+    -> (2,7,'2020-06-10','2020-06-01',7),
+    -> (3,8,'2020-06-03','2020-05-20',8),
+    -> (3,9,'2020-06-15','2020-06-01',9),
+    -> (3,10,'2020-06-05','2020-05-20',10);
+Query OK, 10 rows affected (0.58 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+
+
+
+
